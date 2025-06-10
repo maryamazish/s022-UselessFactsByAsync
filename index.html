@@ -1,111 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/styles/index.css" />
+    <title>Show useless facts</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./assets/styles/index.css" />
-  <title>Show useless facts</title>
-</head>
-
-<body>
-  <div class="container">
-
-    <div id="loading">Loading...
-
+  <body>
+    <div class="container">
+      <div id="loading">Loading...</div>
+      <div id="wrapper">
+        <ol id="present">
+          <li>
+            <p></p>
+            <button onclick="getUselessfact(0)">Change</button>
+          </li>
+          <li>
+            <p></p>
+            <button onclick="getUselessfact(1)">Change</button>
+          </li>
+          <li>
+            <p></p>
+            <button onclick="getUselessfact(2)">Change</button>
+          </li>
+        </ol>
+      </div>
     </div>
-    <div id="wrapper">
-      <ol id="present">
-        <li>
-          <p></p>
-          <button onclick="getUselessfact(0)">Change</button>
-        </li>
-        <li>
-          <p></p>
-          <button onclick="getUselessfact(1)">Change</button>
-        </li>
-        <li>
-          <p></p>
-          <button onclick="getUselessfact(2)">Change</button>
-        </li>
-      </ol>
-    </div>
-  </div>
-</body>
-<script>
+  </body>
+  <script>
+    // let isLoading = true
+    // const loading = setInterval(() => {
+    //   if (isLoading) {
+    //     // document.getElementById("loading").style.display = "block"
+    //   }
+    //   else {
+    //     document.getElementById("loading").style.display = "none"
+    //     document.getElementById("wrapper").style.display = "block"
+    //     clearInterval(loading)
+    //   }
+    // }, 100)
 
-  let isLoading = true
-  const loading = setInterval(() => {
-    if (isLoading) {
-      // document.getElementById("loading").style.display = "block"
-    }
-    else {
-      document.getElementById("loading").style.display = "none"
-      document.getElementById("wrapper").style.display = "block"
-      clearInterval(loading)
-    }
-  }, 100)
+    //const link = "https://uselessfacts.jsph.pl/api/v2/facts/random";
+    const link = "https://api.chucknorris.io/jokes/random";
 
+    const getUselessfacts = async () => {
+      const [response1, response2, response3] = await Promise.all([
+        fetch(link),
+        fetch(link),
+        fetch(link),
+      ]);
+      const result1 = await response1.json();
+      const result2 = await response2.json();
+      const result3 = await response3.json();
 
-  //const link = "https://uselessfacts.jsph.pl/api/v2/facts/random";
-  const link = "https://api.chucknorris.io/jokes/random";
+      // isLoading = false
 
-  const getUselessfacts = async () => {
-    const [response1, response2, response3] = await Promise.all([
-      fetch(link),
-      fetch(link),
-      fetch(link),
-    ]);
-    const result1 = await response1.json();
-    const result2 = await response2.json();
-    const result3 = await response3.json();
+      presentUselessfacts([result1.value, result2.value, result3.value]);
+    };
 
-    isLoading = false
-    presentUselessfacts([result1.value, result2.value, result3.value]);
-  };
+    const getUselessfact = async (itemNumber) => {
+      const response = await fetch(link);
+      const result = await response.json();
 
-  const getUselessfact = async (itemNumber) => {
-    const response = await fetch(link)
-    const result = await response.json();
+      const present = document.getElementById("present");
 
-    const present = document.getElementById("present");
+      const uselessfacts = present.getElementsByTagName("li")[itemNumber];
+      const showUselessfacts = (uselessfacts.getElementsByTagName(
+        "p"
+      )[0].innerText = result.value);
+    };
 
-    const uselessfacts = present.getElementsByTagName("li")[itemNumber];
-    const showUselessfacts = (uselessfacts.getElementsByTagName(
-      "p"
-    )[0].innerText = result.value);
-  };
+    getUselessfacts();
 
-  getUselessfacts();
+    const presentUselessfacts = (arrayUselessfacts) => {
+      if (!arrayUselessfacts.length) return -1;
 
-  const presentUselessfacts = (arrayUselessfacts) => {
-    if (!arrayUselessfacts.length) return -1;
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("wrapper").style.display = "block";
 
-    console.log(arrayUselessfacts[1]);
+      console.log(arrayUselessfacts[1]);
 
-    const present = document.getElementById("present");
+      const present = document.getElementById("present");
 
-    const uselessfacts0 = present.getElementsByTagName("li")[0];
-    const showUselessfacts0 = (uselessfacts0.getElementsByTagName(
-      "p"
-    )[0].innerText = arrayUselessfacts[0]);
-    const changeUselessfacts0 =
-      uselessfacts0.getElementsByTagName("button")[0];
+      const uselessfacts0 = present.getElementsByTagName("li")[0];
+      const showUselessfacts0 = (uselessfacts0.getElementsByTagName(
+        "p"
+      )[0].innerText = arrayUselessfacts[0]);
+      const changeUselessfacts0 =
+        uselessfacts0.getElementsByTagName("button")[0];
 
-    const uselessfacts1 = present.getElementsByTagName("li")[1];
-    const showUselessfacts1 = (uselessfacts1.getElementsByTagName(
-      "p"
-    )[0].innerText = arrayUselessfacts[1]);
-    const changeUselessfacts1 =
-      uselessfacts1.getElementsByTagName("button")[1];
+      const uselessfacts1 = present.getElementsByTagName("li")[1];
+      const showUselessfacts1 = (uselessfacts1.getElementsByTagName(
+        "p"
+      )[0].innerText = arrayUselessfacts[1]);
+      const changeUselessfacts1 =
+        uselessfacts1.getElementsByTagName("button")[1];
 
-    const uselessfacts2 = present.getElementsByTagName("li")[2];
-    const showUselessfacts2 = (uselessfacts2.getElementsByTagName(
-      "p"
-    )[0].innerText = arrayUselessfacts[2]);
-    const changeUselessfacts2 =
-      uselessfacts2.getElementsByTagName("button")[2];
-  };
-</script>
-
+      const uselessfacts2 = present.getElementsByTagName("li")[2];
+      const showUselessfacts2 = (uselessfacts2.getElementsByTagName(
+        "p"
+      )[0].innerText = arrayUselessfacts[2]);
+      const changeUselessfacts2 =
+        uselessfacts2.getElementsByTagName("button")[2];
+    };
+  </script>
 </html>
