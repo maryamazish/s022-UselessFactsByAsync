@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+  <script>
+    const arr1 = [1, 2, 3];
+    const arr2 = [1, 2, 4, 5];
+    const mergeArray = _.union(arr1, arr2);
+    // console.log(mergeArray);
+
+    var flipped = _.flip(function () {
+      return _.toArray(arguments);
+    });
+
+    // console.log(flipped("a", "b", "c", "d"));
+
+    // let prom = new Promise((resolve, reject) => {
+    //   console.log("inside promise");
+    //   // resolve()
+    //   console.log("after promise");
+    // });
+    // console.log(prom);
+
+    // prom = new Promise((resolve, reject) => {
+    //   console.log("inside promise");
+    //   resolve();
+    //   console.log("after promise");
+    // });
+    // console.log(prom);
+    // prom = new Promise((resolve, reject) => {
+    //   console.log("inside promise");
+    //   reject(); //خطا برمیگردونه و چون هندلش نکردم تو کنسول خطای uncaught میده
+    //   console.log("after promise");
+    // });
+    // console.log(prom);
+
+    const double = (x) => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (x < 10) {
+            const result = x * 2;
+            resolve(result); //resolve(x * 2)
+          } else {
+            reject("Number is too heigh");
+          }
+        }, 1000);
+      });
+    };
+
+    // double(8)
+    //   .then((result) => {
+    //     console.log("after double", result);
+    //   })
+    //   .catch((error) => {
+    //     console.log("after error", error);
+    //   });
+    // double(20)
+    //   .then((result) => {
+    //     console.log("after double", result);
+    //   })
+    //   .catch((error) => {
+    //     console.log("after error", error);
+    //   });
+
+    const wrapperDouble = async () => {
+      console.log("before");
+      const foo = await double(2);
+
+      try {
+        const foo = await double(20);
+      } catch {}
+    };
+    // wrapperDouble()
+
+    const wrapperDouble2 = async () => {
+      console.log("before");
+      //   const promises = [double(2), double(3)];
+      //   const result = await Promise.all(promises);
+      //   console.log(result[0] + result[1]);
+
+      const [result1, result2] = await Promise.all(double(2), double(3));
+      console.log(result1 + result2);
+    };
+    // wrapperDouble2();
+
+    const getJoke = () => {
+      fetch("https://api.chucknorris.io/jokes/random")
+        .then((response) => {
+          console.log("response", response);
+          return response.json();
+        })
+        .then((result) => {
+          console.log("result", result);
+          alert(result.value);
+        });
+    };
+    //getJoke();
+
+    const getJokeP = () => {
+      return fetch("https://api.chucknorris.io/jokes/random");
+    };
+    const getJokeAsync = async () => {
+      console.log("before");
+      const response = await fetch("https://api.chucknorris.io/jokes/random");
+      if (response.ok || response === 200) {
+        const result = await response.json();
+        console.log(result.value);
+      }
+    };
+    // getJokeAsync();
+
+    const test = (x) => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (x < 10) {
+            const result = x * 2;
+            console.log("result1", result);
+            resolve(result); //resolve(x * 2)
+          } else {
+            reject("Number is too heigh");
+          }
+        }, 100);
+      });
+    };
+
+    const result = test(2)
+      .then((resolve) => {
+        console.log("resolve", result);
+      })
+      .catch(() => {
+        console.log("catch");
+      });
+
+    for (let i = 0; i <= 300; i++) {
+      console.log("i", i);
+    }
+    console.log("result2", result);
+
+    new Promise((resolve) => {
+      const x = 1 + 2;
+      resolve(x); // هیچ تأخیری نداره
+    }).then(console.log);
+
+    console.log("بببب");
+  </script>
+</html>

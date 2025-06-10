@@ -1,0 +1,52 @@
+:root {
+  --bg-color: rgb(190, 230, 247);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  font-family: Vazirmatn;
+}
+
+.img {
+  display: block;
+}
+
+.container {
+  width: 980px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+li {
+  display: flex;
+  border: 1px solid blue;
+  justify-content: center;
+  align-items: center;
+  padding: 0 5px;
+  margin-top: 5px;
+}
+
+li button {
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+li p {
+  flex-grow: 1;
+}
+
+#loading{
+  display: block;
+  font-weight: 500;
+  font-size: 30px;
+}
+
+#wrapper{
+  display: none;
+}
